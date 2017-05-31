@@ -29,7 +29,7 @@ RUN chmod 775 /opt/lts_utils/* && \
     /opt/lts_utils/update_tomcat_java.sh
 
 # Install FITS Application
-ADD http://projects.iq.harvard.edu/files/fits/files/fits-1.1.0.zip /opt
+ADD http://projects.iq.harvard.edu/files/fits/files/fits-1.1.1.zip /opt
 
 RUN mkdir /processing && \
     chown tomcat:tomcat /processing && \
