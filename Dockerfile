@@ -6,7 +6,10 @@ ENV FITS_VERSION 1.1.1
 ENV FITSSERVLET_VERSION 1.1.3
 
 # Update Environment:
-RUN yum -y update && \
+RUN echo "LANG=en_US.utf-8" >> /etc/profile.d/locale.sh && \
+    echo "LC_ALL=en_US.utf-8" >> /etc/profile.d/locale.sh && \
+    echo "export LANG LC_ALL" >> /etc/profile.d/locale.sh && \
+    yum -y update && \
     yum -y install python27 python27-pip gpg openssl wget unzip perl util-linux && \
     easy_install supervisor && \
     echo_supervisord_conf > /etc/supervisord.conf && \
@@ -18,7 +21,7 @@ RUN yum -y update && \
 COPY tomcat.conf /etc/supervisor.d/
 COPY java_home.pl /opt/lts_utils/
 RUN mkdir /opt/fits && \
-    useradd -u 15001 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
+    useradd -u 173 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
     mkdir /processing && \
     chown tomcat:tomcat /processing && \
     chown -R tomcat:tomcat /opt/lts_utils && \
