@@ -46,6 +46,7 @@ while getopts ":u:g:h" tcOpt; do
       if ! [ "$NEW_GROUPID" -eq "$NEW_GROUPID" ] ; then
         echo "Invalid Group ID passed: $NEW_GROUPID, must be a number"
         exit 1
+      fi
       ;;
     h)
       usage
