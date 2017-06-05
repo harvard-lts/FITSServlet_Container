@@ -96,7 +96,7 @@ if [ $NEW_GROUPID -ne 0 ]
 then
   EXISTING_GID=`getent group $NEW_GROUPID`
   PREVIOUS_GID=`getent group $GROUPNAME | cut -d ':' -f 3`
-  if [ $PREVIOUS_GUID -eq $NEW_GROUPID ]
+  if [ $PREVIOUS_GID -eq $NEW_GROUPID ]
   then
     echo "Can't change group ID to match the current group ID."
     usage
@@ -107,7 +107,7 @@ then
     echo "That GID is already assigned to the group: $OWNER_GID"
     exit 1;
   fi
-  echo "Changing $GROUPNAME ID from $PREVIOUS_GUID to $NEW_GROUPID"
+  echo "Changing $GROUPNAME ID from $PREVIOUS_GID to $NEW_GROUPID"
   groupmod -g $NEW_GROUPID $GROUPNAME
   CONFIRM_GUID_CHANGE=`getent group $GROUPNAME | cut -d ':' -f 3`
   if [ $NEW_GROUPID -ne $CONFIRM_GUID_CHANGE ]
@@ -115,8 +115,8 @@ then
     echo "Error processing GID change request"
     exit 1;
   fi
-  find / -group $PREVIOUS_GUID -exec chgrp -h $GROUPNAME {} \;
-  echo "$GROUPNAME group ID modified from $PREVIOUS_GUID to $NEW_GROUPID"
+  find / -group $PREVIOUS_GID -exec chgrp -h $GROUPNAME {} \;
+  echo "$GROUPNAME group ID modified from $PREVIOUS_GID to $NEW_GROUPID"
   PROCESSED_CHANGE=1
 fi
 
