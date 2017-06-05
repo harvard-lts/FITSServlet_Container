@@ -42,8 +42,10 @@ while getopts ":u:g:h" tcOpt; do
       fi
       ;;
     g)
-      echo "-g was triggered, Parameter: $OPTARG" >&2
       NEW_GROUPID=$OPTARG
+      if ! [ "$NEW_GROUPID" -eq "$NEW_GROUPID" ] ; then
+        echo "Invalid Group ID passed: $NEW_GROUPID, must be a number"
+        exit 1
       ;;
     h)
       usage
@@ -75,6 +77,7 @@ then
     echo "That ID is already assigned to: $OWNER_UID"
     exit 1;
   fi
+  echo "Changing $USERNAME ID from $PREVIOUS_UID to $NEW_USERID"
   usermod -u $NEW_USERID $USERNAME;
   CONFIRM_UID_CHANGE=`getent passwd $USERNAME | cut -d ':' -f 3`
   if [ $NEW_USERID -ne $CONFIRM_UID_CHANGE ]
@@ -103,6 +106,7 @@ then
     echo "That GID is already assigned to the group: $OWNER_GID"
     exit 1;
   fi
+  echo "Changing $GROUPNAME ID from $PREVIOUS_GUID to $NEW_GROUPID"
   groupmod -g $NEW_GROUPID $GROUPNAME
   CONFIRM_GUID_CHANGE=`getent group $GROUPNAME | cut -d ':' -f 3`
   if [ $NEW_GROUPID -ne $CONFIRM_GUID_CHANGE ]
