@@ -86,7 +86,7 @@ then
     echo "Error processing ID change request."
     exit 1;
   fi
-  find / -user $PREVIOUS_UID -exec chown -h $USERNAME {} \;
+  find / -user $PREVIOUS_UID -not -path /proc -exec chown -h $USERNAME {} \;
 
   echo "$USERNAME user ID modified from $PREVIOUS_UID to $NEW_USERID"
   PROCESSED_CHANGE=1
@@ -115,7 +115,7 @@ then
     echo "Error processing GID change request"
     exit 1;
   fi
-  find / -group $PREVIOUS_GID -exec chgrp -h $GROUPNAME {} \;
+  find / -group $PREVIOUS_GID -not -path /proc -exec chgrp -h $GROUPNAME {} \;
   echo "$GROUPNAME group ID modified from $PREVIOUS_GID to $NEW_GROUPID"
   PROCESSED_CHANGE=1
 fi
