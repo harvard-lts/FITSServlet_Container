@@ -1,4 +1,4 @@
-FROM amazonlinux:latest
+FROM centos:6
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
     TOMCAT_VERSION="8.0.45" \
@@ -15,7 +15,7 @@ RUN echo "LANG=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "LC_ALL=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "export LANG LC_ALL" >> /etc/profile.d/locale.sh && \
     yum -y update && \
-    yum -y install python27 python27-pip gpg openssl wget unzip perl util-linux && \
+    yum -y install python-setuptools gpg openssl wget unzip perl util-linux && \
     easy_install supervisor && \
     echo_supervisord_conf > /etc/supervisord.conf && \
     mkdir /etc/supervisor.d && \
@@ -79,4 +79,4 @@ EXPOSE 8080 \
        8443
 
 # Start up Tomcat 8
-CMD ["/usr/local/bin/supervisord"]
+CMD ["/usr/bin/supervisord"]
