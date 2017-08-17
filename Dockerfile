@@ -6,7 +6,8 @@ ENV TOMCAT_MAJOR="8" \
     FITSSERVLET_VERSION="1.1.3" \
     FITS_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
     CATALINA_HOME=/opt/tomcat \
-    JAVA_DOWNLOAD=http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+    JAVA_DOWNLOAD=http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm
+# Lazy download environment link, did this to avoid typing out the long URL all at once.  You can't use an ENV variable within the same ENV statement.
 ENV TOMCAT_TAR=https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
 # Update Environment:
