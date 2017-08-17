@@ -1,8 +1,8 @@
 FROM amazonlinux:latest
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
-    TOMCAT_VERSION="8.0.44" \
-    FITS_VERSION="1.1.1" \
+    TOMCAT_VERSION="8.0.45" \
+    FITS_VERSION="1.2.0" \
     FITSSERVLET_VERSION="1.1.3" \
     FITS_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
     CATALINA_HOME=/opt/tomcat \
