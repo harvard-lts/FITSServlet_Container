@@ -1,7 +1,7 @@
 FROM centos:6
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
-    TOMCAT_VERSION="8.0.45" \
+    TOMCAT_VERSION="8.0.46" \
     FITS_VERSION="1.2.0" \
     FITSSERVLET_VERSION="1.1.3" \
     FITS_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
@@ -15,19 +15,22 @@ RUN echo "LANG=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "LC_ALL=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "export LANG LC_ALL" >> /etc/profile.d/locale.sh && \
     yum -y update && \
+    useradd -u 173 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
     yum -y install python-setuptools gpg openssl wget unzip perl util-linux && \
     easy_install supervisor && \
     echo_supervisord_conf > /etc/supervisord.conf && \
     mkdir /etc/supervisor.d && \
-    echo "[include]" >> /etc/supervisord.conf && \
-    echo "files=/etc/supervisor.d/*.conf" >> /etc/supervisord.conf
+    mkdir /var/lib/supervisor && \
+    mkdir /var/log/supervisor && \
+    chown tomcat /var/log/supervisor && \
+    chown tomcat /var/lib/supervisor
 
 # Copy in local configurations and utilities
-COPY tomcat.conf /etc/supervisor.d/
+COPY supervisord.conf /etc/
+COPY supervisor/* /etc/supervisor.d/
 COPY java_home.pl /opt/lts_utils/
 COPY change_tomcat_id.sh /opt/lts_utils/
 RUN mkdir /opt/fits && \
-    useradd -u 173 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
     mkdir /processing && \
     chown tomcat:tomcat /processing && \
     chown -R tomcat:tomcat /opt/lts_utils && \

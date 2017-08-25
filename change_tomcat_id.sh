@@ -7,7 +7,7 @@
 # this way mounted volumes will be aligned with permissions on the underlying
 # operating system.
 # TODO: Fix script such that checks for all proposed changes are tested
-#       before any change is committed. 
+#       before any change is committed.
 
 # Tracker Variables
 PROCESSED_CHANGE=0
@@ -128,7 +128,7 @@ then
   fi
 
   # Modify files owned by the user to match the new UID.
-  find / -user $PREVIOUS_UID -not -path /proc -exec chown -h $USERNAME {} \;
+  find /  -path /proc -prune -o -path /sys -prune -o -user $PREVIOUS_UID -exec chown -h $USERNAME {} \;
 
   # Confirm change has been completed.
   echo "$USERNAME user ID modified from $PREVIOUS_UID to $NEW_USERID"
@@ -173,7 +173,7 @@ then
   fi
 
   # Find and modify files owned by the old GID nad change them to the new GID.
-  find / -group $PREVIOUS_GID -not -path /proc -exec chgrp -h $GROUPNAME {} \;
+  find / -path /proc -prune -o -path /sys -prune -o -group $PREVIOUS_GID -exec chgrp -h $GROUPNAME {} \;
 
   # Inform user that change has been completed.
   echo "$GROUPNAME group ID modified from $PREVIOUS_GID to $NEW_GROUPID"
