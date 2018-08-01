@@ -82,4 +82,4 @@ EXPOSE 8080 \
        8443
 
 # Start up Tomcat 8
-CMD ["/usr/local/bin/supervisord"]
+CMD ["/usr/bin/supervisord"]
