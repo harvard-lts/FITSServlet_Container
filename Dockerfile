@@ -1,12 +1,12 @@
 FROM amazonlinux:latest
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
-    TOMCAT_VERSION="8.0.45" \
-    FITS_VERSION="1.2.0" \
+    TOMCAT_VERSION="8.0.53" \
+    FITS_VERSION="1.3.0" \
     FITSSERVLET_VERSION="1.1.3" \
     FITS_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
     CATALINA_HOME=/opt/tomcat \
-    JAVA_DOWNLOAD=http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm
+    JAVA_DOWNLOAD=http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.rpm
 # Lazy download environment link, did this to avoid typing out the long URL all at once.  You can't use an ENV variable within the same ENV statement.
 ENV TOMCAT_TAR=https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
@@ -16,18 +16,21 @@ RUN echo "LANG=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "export LANG LC_ALL" >> /etc/profile.d/locale.sh && \
     yum -y update && \
     yum -y install python27 python27-pip gpg openssl wget unzip perl util-linux && \
+    useradd -u 173 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
     easy_install supervisor && \
     echo_supervisord_conf > /etc/supervisord.conf && \
     mkdir /etc/supervisor.d && \
-    echo "[include]" >> /etc/supervisord.conf && \
-    echo "files=/etc/supervisor.d/*.conf" >> /etc/supervisord.conf
+    mkdir /var/lib/supervisor && \
+    mkdir /var/log/supervisor && \
+    chown tomcat /var/lib/supervisor && \
+    chown tomcat /var/log/supervisor
 
 # Copy in local configurations and utilities
-COPY tomcat.conf /etc/supervisor.d/
+COPY supervisord.conf /etc/
+COPY supervisor/* /etc/supervisor.d/
 COPY java_home.pl /opt/lts_utils/
 COPY change_tomcat_id.sh /opt/lts_utils/
 RUN mkdir /opt/fits && \
-    useradd -u 173 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
     mkdir /processing && \
     chown tomcat:tomcat /processing && \
     chown -R tomcat:tomcat /opt/lts_utils && \
@@ -44,10 +47,10 @@ USER tomcat
 WORKDIR /opt/fits
 RUN curl -o fits.zip $FITS_URL-$FITS_VERSION.zip && \
     unzip -q fits.zip && \
-    rm fits.zip && \
-    mv fits* REMOVEME && \
-    mv REMOVEME/* . && \
-    rmdir REMOVEME
+    rm fits.zip 
+#    mv fits* REMOVEME && \
+#    mv REMOVEME/* . && \
+#    rmdir REMOVEME
 
 # Install Tomcat from Apache, based on Tomcat DockerHub Package.
 WORKDIR $CATALINA_HOME
