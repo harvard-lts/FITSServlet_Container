@@ -1,12 +1,12 @@
 FROM centos:6
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
-    TOMCAT_VERSION="8.0.46" \
-    FITS_VERSION="1.2.0" \
+    TOMCAT_VERSION="8.0.53" \
+    FITS_VERSION="1.3.0" \
     FITSSERVLET_VERSION="1.1.3" \
     FITS_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
     CATALINA_HOME=/opt/tomcat \
-    JAVA_DOWNLOAD=http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm
+    JAVA_DOWNLOAD=http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.rpm
 # Lazy download environment link, did this to avoid typing out the long URL all at once.  You can't use an ENV variable within the same ENV statement.
 ENV TOMCAT_TAR=https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
@@ -47,10 +47,10 @@ USER tomcat
 WORKDIR /opt/fits
 RUN curl -o fits.zip $FITS_URL-$FITS_VERSION.zip && \
     unzip -q fits.zip && \
-    rm fits.zip && \
-    mv fits* REMOVEME && \
-    mv REMOVEME/* . && \
-    rmdir REMOVEME
+    rm fits.zip 
+#    mv fits* REMOVEME && \
+#    mv REMOVEME/* . && \
+#    rmdir REMOVEME
 
 # Install Tomcat from Apache, based on Tomcat DockerHub Package.
 WORKDIR $CATALINA_HOME
