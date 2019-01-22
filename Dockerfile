@@ -15,7 +15,8 @@ RUN echo "LANG=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "LC_ALL=en_US.utf-8" >> /etc/profile.d/locale.sh && \
     echo "export LANG LC_ALL" >> /etc/profile.d/locale.sh && \
     yum -y update && \
-    yum -y install tar python27 python27-pip python2-setuptools gpg openssl wget unzip perl util-linux && \
+    yum -y install file which tar python27 python27-pip python2-setuptools gpg openssl wget unzip perl util-linux && \
+    yum -y clean all && \
     useradd -u 173 -s /sbin/nologin -d /opt/tomcat -m tomcat && \
     easy_install supervisor && \
     echo_supervisord_conf > /etc/supervisord.conf && \
@@ -40,7 +41,8 @@ RUN mkdir /opt/fits && \
 # Install Java on Amazon Linux:
 RUN wget --header "Cookie: oraclelicense=accept-securebackup-cookie" $JAVA_DOWNLOAD && \
     yum localinstall -y jdk*rpm && \
-    yum install -y jpackage-utils javapackages-tools
+    yum install -y jpackage-utils javapackages-tools && \
+    yum -y clean all
 
 USER tomcat
 # Install FITS Application
