@@ -29,4 +29,4 @@ to the OpenJDK license.
 
 # Build Features:
 There is a volume called /processing, if you attach local storage to this you can put files into the folder and then you can use the URL to examine them like follows:
-http://[DOCKERIP]:8080/examine?file=/processing/[FILENAME]
+http://[DOCKERIP]:8080/fits/examine?file=/processing/[FILENAME]
