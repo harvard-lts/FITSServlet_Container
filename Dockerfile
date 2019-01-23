@@ -7,7 +7,7 @@ ENV TOMCAT_MAJOR="8" \
     FITS_SERVLET_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
     CATALINA_HOME=/opt/tomcat
 
-# To reuse variables this environment has to exist after the first setting. 
+# To reuse variables this environment has to exist after the first setting.
 ENV TOMCAT_TAR=https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz \
     FITS_URL="https://github.com/harvard-lts/fits/releases/download/$FITS_VERSION/fits-$FITS_VERSION.zip"
 
@@ -43,8 +43,7 @@ USER tomcat
 
 # Install FITS Application
 WORKDIR /opt/fits
-RUN echo $FITS_URL && \
-    curl -Lo fits.zip $FITS_URL && \
+RUN curl -Lo fits.zip $FITS_URL && \
     unzip -q fits.zip && \
     rm fits.zip
 
