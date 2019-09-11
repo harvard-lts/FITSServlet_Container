@@ -1,9 +1,9 @@
 FROM amazonlinux:2
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
-    TOMCAT_VERSION="8.5.40" \
-    FITS_VERSION="1.4.1" \
-    FITSSERVLET_VERSION="1.2.0" \
+    TOMCAT_VERSION="8.5.45" \
+    FITS_VERSION="1.5.0" \
+    FITSSERVLET_VERSION="1.2.1" \
     FITS_SERVLET_URL="http://projects.iq.harvard.edu/files/fits/files/fits" \
     CATALINA_HOME=/opt/tomcat
 
