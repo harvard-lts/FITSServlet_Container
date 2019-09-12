@@ -1,4 +1,4 @@
-FROM amazonlinux:2
+FROM centos:7
 LABEL maintainer "Anthony Moulen <anthony_moulen@harvard.edu>"
 ENV TOMCAT_MAJOR="8" \
     TOMCAT_VERSION="8.5.45" \
