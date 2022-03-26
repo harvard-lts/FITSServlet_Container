@@ -1,3 +1,8 @@
+| :exclamation:  This project has been archived |
+|:-----------------------------------------------|
+| The Docker functionality can now be found in [FITSServlet](https://github.com/harvard-lts/FITSServlet) |
+
+
 # FITSServlet_Container
 FITS Servlet Docker Container
 Pulling this package use: docker pull harvardlts/fitsservlet_container:latest
